@@ -22,18 +22,21 @@ def detect_mark(img):
         return False
 
 def main():
+
+    # Add images to a list
     image_list = []
     for root, dirs, files in os.walk("./images"):
         for filename in files:
             temp = filename.split('.')
             image_list.append(tuple(temp))
-    
+
     for image in image_list:
         if image[1] not in ["jpg", "png"]:
             continue
 
         img = cv.imread("images/{}".format(image[0] + "." + image[1]), cv.IMREAD_COLOR)
 
+        # Don't crop or store image if there is no logo
         if (detect_mark(img)):
             cropped_image = img[0:img.shape[0]-20, 0:img.shape[1]]
             cropped_image_filename = "{}_nomark{}".format(image[0], "." + image[1])
